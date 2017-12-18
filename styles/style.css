@@ -52,7 +52,6 @@ body{
 }
 
 .signUpModalButton{
-
   display: none;
   margin: 2%;
   font-weight: bold;
@@ -138,7 +137,7 @@ h1{
   outline: none;
 }
 
-#modalButton{
+#workWithUsModalButton{
   margin: 2%;
   font-weight: bold;
   -webkit-text-stroke: .4px black;
@@ -153,7 +152,7 @@ h1{
    transition: transform 0.5s ease-in-out;
 }
 
-#modalButton:hover{
+#workWithUsModalButton:hover{
   -moz-transform: scale(1.05);
     -webkit-transform: scale(1.05);
     -o-transform: scale(1.05);
@@ -162,7 +161,35 @@ h1{
     transform: scale(1.05);
 }
 
-#modalButton:focus{
+#workWithUsModalButton:focus{
+  outline: none;
+}
+
+#subscribeModalButton{
+  margin: 2%;
+  font-weight: bold;
+  -webkit-text-stroke: .4px black;
+  font-size: 2vw;
+  width: 25%;
+  border-radius: 10px;
+  padding: 3%;
+  background-color: rgb(0, 110, 109);
+  color: white;
+  -webkit-transition: transform 0.5s ease-in-out;
+   -moz-transition: transform 0.5s ease-in-out;
+   transition: transform 0.5s ease-in-out;
+}
+
+#subscribeModalButton:hover{
+  -moz-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+#subscribeModalButton:focus{
   outline: none;
 }
 

@@ -2,10 +2,12 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="styles/style.css"/>
-    <title>Mailing List</title>
+    <script src="js/javascript-qrcode/lib/qrcode.js"></script>
+    <title>Company Lead Events</title>
   </head>
   <body>
-    <h1>Events</h1>
+    <h1>Upcoming Events</h1>
+    <div class="qrCodeDiv"></div>
     <div class="eventsDiv">
     </div>
     <div class="outerModal">
@@ -32,6 +34,13 @@
       <br/>
     <button class="subscribeToListButton" type="submit" style="margin-left: 35%">rsvp</button>
     </form>
+
+<script>
+var data = 'ABC1234';
+var qrcode = new QrCode(data);
+var matrix = qrcode.getData();
+document.getElementByClassName("qrCodeDiv")[0].innerText = matrix
+</script>
       <script type="text/javascript" src="js/events.js"></script>
   </body>
 </html>
