@@ -193,6 +193,20 @@ h1{
   outline: none;
 }
 
+#ticket{
+  z-index: 100;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  border: solid 1px black;
+  width: 50%;
+  height: auto;
+  position: fixed;
+  left: 20%;
+  padding: 2%;
+  display: none;
+}
+
 .interviewForm{
   font-size: 1.5vw;
   border-radius: 10px;

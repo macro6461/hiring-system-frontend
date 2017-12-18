@@ -38,7 +38,6 @@ function openEventForm(data){
   workWithUs = document.getElementById("modalButton")
   license = document.querySelector('input[name="licensed"]')
   header = document.getElementsByClassName("eventTitle")[0]
-  console.log(header)
   header.innerText = data
   outer.style.display = "unset"
   rsvp.style.display = "unset"
@@ -68,5 +67,36 @@ function submitCompanyLeadRsvpFormData(e){
         })
       })
       .then(res => res.json())
-      .then(json => console.log(json))
+      .then(json => fetchRsvpOtp(json))
+}
+
+function fetchRsvpOtp(data){
+
+  debugger
+  fetch(`http://localhost:3000/company_lead_rsvp_tickets/${data.company_lead_rsvp.id}}`)
+  .then(res => res.json())
+  .then(json => generateQrCode(json))
+}
+
+function generateQrCode(data){
+  debugger
+  var typeNumber = 4;
+        var errorCorrectionLevel = 'L';
+        var qr = qrcode(typeNumber, errorCorrectionLevel);
+        qr.addData(`${data.otp_secret_key}`);
+        qr.make();
+  showTicket({ticket:data, qrCode:qr} )
+}
+
+function showTicket(data){
+  rsvp.style.display = "none"
+  debugger
+  document.getElementById('ticketTitleHeader').innerHTML = data.ticket.title
+  document.getElementById('ticketDateHeader').innerHTML = data.ticket.date
+  document.getElementById('ticketConfirmationHeader').innerHTML = data.ticket.confirmation
+  document.getElementById('ticketLocationHeader').innerHTML = data.ticket.location
+  let qrCodeRendered = document.getElementById('placeHolder').innerHTML = data.qrCode.createImgTag();
+  debugger
+  qrCodeRendered.style.width = "30px"
+  document.getElementById('ticket').style.display = "unset"
 }
