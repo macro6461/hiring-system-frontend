@@ -2,12 +2,21 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="styles/style.css"/>
-    <script src="js/javascript-qrcode/lib/qrcode.js"></script>
+    <script type="text/javascript" src="node_modules/qrcode-generator/qrcode.js"></script>
     <title>Company Lead Events</title>
   </head>
   <body>
     <h1>Upcoming Events</h1>
-    <div class="qrCodeDiv"></div>
+    <div id="placeHolder"></div>
+    <script>
+    var typeNumber = 4;
+          var errorCorrectionLevel = 'L';
+          var qr = qrcode(typeNumber, errorCorrectionLevel);
+          qr.addData('yOOOOOO');
+          qr.make();
+          document.getElementById('placeHolder').innerHTML = qr.createImgTag();
+    </script>
+    <script src="node_modules/.bin/qrcode"></script>
     <div class="eventsDiv">
     </div>
     <div class="outerModal">
@@ -35,12 +44,6 @@
     <button class="subscribeToListButton" type="submit" style="margin-left: 35%">rsvp</button>
     </form>
 
-<script>
-var data = 'ABC1234';
-var qrcode = new QrCode(data);
-var matrix = qrcode.getData();
-document.getElementByClassName("qrCodeDiv")[0].innerText = matrix
-</script>
       <script type="text/javascript" src="js/events.js"></script>
   </body>
 </html>
