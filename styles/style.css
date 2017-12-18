@@ -17,7 +17,25 @@ body{
   width: 50%;
 }
 
+.rsvpForm {
+  display: none;
+  opacity: 1 !important;
+  position: fixed;
+  top: 10%;
+  left: 23%;
+  background-color: #eeeeee;
+  z-index: 100;
+  border-radius: 10px;
+  border: solid 1px grey;
+  padding: 2%;
+  width: 50%;
+}
+
 .interviewAnchor{
+  text-decoration: none;
+}
+
+.eventsAnchor{
   text-decoration: none;
 }
 

@@ -10,26 +10,25 @@ document.addEventListener('DOMContentLoaded', function(){
   let phoneInput = document.getElementById("phoneInput")
   let workWithUs = document.getElementById("modalButton")
   let license = document.querySelector('input[name="licensed"]')
-  interviewForm.addEventListener("submit", submitInterviewFormData)
+  interviewForm.addEventListener("submit", submitCompanyLeadInterviewFormData)
   console.log(license)
 })
 
-function submitInterviewFormData(e){
+function submitCompanyLeadInterviewFormData(e){
   e.preventDefault()
-let licensed = document.querySelector('input[name="licensed"]:checked').value
-console.log(licensed)
+  let licensed = document.querySelector('input[name="licensed"]:checked').value
+  console.log(licensed)
   event.preventDefault()
-  fetch(url, {
+  fetch("http://localhost:3000/company_lead_interviews", {
         headers: {"Content-Type": "application/json",
         "Accept":"application/json"},
         method: "POST",
         body: JSON.stringify({
-          email: emailInput.value
+          email_address: emailInput.value,
           first_name: firstInput.value,
           last_name: lastInput.value,
-          phoneInput: phoneInput.value,
+          phone_number: phoneInput.value,
           licensed: licensed,
-          
         })
       })
       .then(res => res.json())

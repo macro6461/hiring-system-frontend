@@ -5,10 +5,16 @@
     <title>Mailing List</title>
   </head>
   <body>
-    <h1>Bohemia Realty Group Is Hiring!</h1>
-    <form class="interviewForm">
-      <h2>Company Lead Interview Form</h2>
-      <br />First Name: <input id="firstInput" type="text"/> Last Name: <input id="lastInput" type="text"/>
+    <h1>Events</h1>
+    <div class="eventsDiv">
+    </div>
+    <div class="outerModal">
+    </div>
+    <form class="rsvpForm" style="display: none">
+      <h2 class="eventTitle" style="text-align: center"></h2>
+      <br />First Name: <input id="firstInput" type="text"/>
+      <br />
+      <br />Last Name: <input id="lastInput" type="text"/>
       <br />
       <br />Email: <input id="emailInput" type="text"/></br>
       <br />Phone Number:
@@ -24,8 +30,8 @@
         </label>
       </div>
       <br/>
-    <button class="subscribeToListButton" type="submit">schedule interview!</button>
+    <button class="subscribeToListButton" type="submit" style="margin-left: 35%">rsvp</button>
     </form>
-      <script type="text/javascript" src="js/mailingListSignUp.js"></script>
+      <script type="text/javascript" src="js/events.js"></script>
   </body>
 </html>
