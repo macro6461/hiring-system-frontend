@@ -77,10 +77,11 @@ function fetchRsvpOtp(data){
 function generateQrCode(data){
   //consider adding more user data in the qr code. When scanned it reads the string it was used to be made.
   debugger
+  
   var typeNumber = 8;
         var errorCorrectionLevel = 'L';
         var qr = qrCodeGenerator(typeNumber, errorCorrectionLevel);
-        qr.addData(`http://localhost:3000/${data.id}`);
+        qr.addData(data.otp_secret_key);
         qr.make();
   showTicket({ticket: data, qrCode:qr} )
 }
