@@ -79,7 +79,7 @@ function generateQrCode(data){
   debugger
   var typeNumber = 8;
         var errorCorrectionLevel = 'L';
-        var qr = qrcode(typeNumber, errorCorrectionLevel);
+        var qr = qrCodeGenerator(typeNumber, errorCorrectionLevel);
         qr.addData(`http://localhost:3000/${data.id}`);
         qr.make();
   showTicket({ticket: data, qrCode:qr} )

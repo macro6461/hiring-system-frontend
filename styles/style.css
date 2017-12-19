@@ -218,34 +218,27 @@ h1{
   outline: none;
 }
 
-.qrcode-text-btn {
-  display: inline-block;
-  height: 1em;
-  width: 1em;
-  background: url(https://wikimediablog.files.wordpress.com/2011/09/a-qrpedia-code-for-the-wikipedia-article-about-the-artist-joan-miro.png) 50% 50% no-repeat;
-  cursor: pointer;
-}
-
 .qrcode-text {
-  padding-right: 1.7em;
-  margin-right: 0;
-  vertical-align: middle;
-
+  padding-right:1.7em;
+  margin-right:0
 }
 
-.qrcode-text + .qrcode-text-btn {
-  width: 1.7em;
-  margin-left: -1.7em;
-  vertical-align: middle;
+.qrcode-text-btn {
+  display:inline-block; background:url(microQrcodeImage.png) 50% 50% no-repeat;
+  height:1em;
+  width:1.7em;
+  margin-left:-1.7em;
+  cursor:pointer
 }
 
 .qrcode-text-btn > input[type=file] {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
+  position:absolute;
+  /* overflow:hidden; */
+  width:1px;
+  height:1px;
+  opacity:1;
 }
+
 
 #ticket{
   z-index: 100;
