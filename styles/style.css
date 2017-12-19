@@ -109,6 +109,31 @@ h1{
   outline: none;
 }
 
+.checkIn{
+  width: 30%;
+  color: white;
+  background-color: cadetblue;
+  border-radius: 5px;
+  font-size: 1vw;
+  padding: 2%;
+  -webkit-transition: transform 0.5s ease-in-out;
+   -moz-transition: transform 0.5s ease-in-out;
+   transition: transform 0.5s ease-in-out;
+}
+
+.checkIn:hover{
+  -moz-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+.checkIn:focus{
+  outline: none;
+}
+
 .interviewModalButton{
   margin: 2%;
   font-weight: bold;
@@ -193,6 +218,34 @@ h1{
   outline: none;
 }
 
+.qrcode-text-btn {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  background: url(https://wikimediablog.files.wordpress.com/2011/09/a-qrpedia-code-for-the-wikipedia-article-about-the-artist-joan-miro.png) 50% 50% no-repeat;
+  cursor: pointer;
+}
+
+.qrcode-text {
+  padding-right: 1.7em;
+  margin-right: 0;
+  vertical-align: middle;
+}
+
+.qrcode-text + .qrcode-text-btn {
+  width: 1.7em;
+  margin-left: -1.7em;
+  vertical-align: middle;
+}
+
+.qrcode-text-btn > input[type=file] {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
 #ticket{
   z-index: 100;
   background-color: white;
@@ -228,6 +281,30 @@ h1{
 }
 
 .interviewForm input:focus{
+  outline: none;
+}
+
+.checkInForm{
+  font-size: 1.5vw;
+  border-radius: 10px;
+  padding: 5%;
+  margin-left: 25%;
+  display: block;
+  background-color: white;
+  width: 40%;
+}
+
+.checkInForm input{
+  padding-left: 2%;
+  border: solid .5px grey;
+  border-radius: 4px;
+  font-size: 1vw;
+  min-height: 4%;
+  height: auto;
+  width: 50%;
+}
+
+.checkInForm input:focus{
   outline: none;
 }
 

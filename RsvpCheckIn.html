@@ -1,0 +1,100 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+    <script type="text/javascript" src="node_modules/qrcode-generator/qrcode.js"></script>
+    <title>RSVP checkin</title>
+  </head>
+  <body>
+    <h1>Check In</h1>
+    <form class="checkInForm">
+      <h2>Company Lead Interview Form</h2>
+      <br />First Name: <input id="firstInput" type="text"/>
+      <br />
+      <br/>Last Name: <input id="lastInput" type="text"/>
+      <br />
+      <br />Confirmation: <input id="confirmationInput" type="text"/></br>
+      <br/>
+      code: <input type=text class=qrcode-text><label class=qrcode-text-btn>
+    <input type=file
+        accept="image/*"
+        capture=environment
+        onchange="openQRCamera(this)"
+        onclick="return showQRIntro()"
+        tabindex=-1>
+  </label>
+      </div>
+      <br/>
+      <br/>
+      <br/>
+    <button style="margin-left: 35%;"class="checkIn" type="submit">check in</button>
+    </form>
+    <div class="ticketResponseDiv" style="display: none">
+
+    </div>
+    <script>
+    let checkInForm = document.getElementsByClassName("checkInForm")[0]
+    let checkIn = document.getElementsByClassName("checkIn")[0]
+    let code = document.getElementsByClassName("qrcode-text")[0]
+    let ticketResponse = document.getElementsByClassName("ticketResponseDiv")[0]
+    document.addEventListener('DOMContentLoaded', function(){
+      let firstInput = document.getElementById("firstInput")
+      let lastInput = document.getElementById("lastInput")
+      let confirmationNum = document.getElementById("confirmationInput")
+
+      checkInForm.addEventListener("submit", submitCheckIn)
+      console.log(code.value)
+    })
+
+    function submitCheckIn(e){
+      console.log(code.value)
+      e.preventDefault()
+      debugger
+      fetch("http://localhost:3000/company_lead_rsvp_tickets", {
+            headers: {"Content-Type": "application/json",
+            "Accept":"application/json"},
+            method: "POST",
+            body: JSON.stringify({
+              otp_secret_key: code.value,
+              first_name: firstInput.value,
+              last_name: lastInput.value,
+            })
+          })
+          .then(res => res.json())
+          .then(json => findTicket(json))
+    }
+
+    function findTicket(data){
+      if (!data.company_lead_rsvp_ticket){
+        ticketResponse.innerText = "RSVP not found"
+        ticketResponse.style.display = "unset"
+        ticketResponse.style.border = "solid 1px black"
+        ticketResponse.style.position = "fixed"
+        ticketResponse.style.left = "30%"
+        ticketResponse.style.top = "80%"
+      } else if (data.company_lead_rsvp_ticket){
+      fetch(`http://localhost:3000/company_lead_rsvp_tickets/${data.company_lead_rsvp_ticket.id}`, {
+            headers: {"Content-Type": "application/json",
+            "Accept":"application/json"},
+            method: "PATCH",
+            body: JSON.stringify({
+              scanned: true
+            })
+          })
+          .then(res => res.json())
+          .then(json => renderTicketResponse(json))
+        }
+    }
+
+    function renderTicketResponse(data){
+      debugger
+        ticketResponse.innerText = "Checkin Successful!"
+        ticketResponse.style.display = "unset"
+        ticketResponse.style.border = "solid 1px black"
+        ticketResponse.style.position = "fixed"
+        ticketResponse.style.left = "30%"
+        ticketResponse.style.top = "80%"
+      }
+    </script>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+    <script type="text/javascript" src="node_modules/qrcode-generator/qrcode.js"></script>
+    <title>Camera Capture</title>
+  </head>
+  <body>
+    <input type=text class=qrcode-text
+><label class=qrcode-text-btn>
+  <input type=file
+      accept="image/*"
+      capture=environment
+      onchange="openQRCamera(this)"
+      onclick="return showQRIntro()"
+      tabindex=-1>
+</label>
+
+  </body>
+</html>

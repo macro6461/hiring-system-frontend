@@ -80,9 +80,9 @@ function generateQrCode(data){
   var typeNumber = 8;
         var errorCorrectionLevel = 'L';
         var qr = qrcode(typeNumber, errorCorrectionLevel);
-        qr.addData(`http://www.bohemiarealtygroup.com/${data.otp_secret_key}`);
+        qr.addData(`http://localhost:3000/${data.id}`);
         qr.make();
-  showTicket({ticket:data, qrCode:qr} )
+  showTicket({ticket: data, qrCode:qr} )
 }
 
 function showTicket(data){
