@@ -8,21 +8,14 @@
   <body>
     <h1>Check In</h1>
     <form class="checkInForm">
-      <h2>Company Lead Interview Form</h2>
+      <h2>Bohemia January Hiring Event</h2>
       <br />First Name: <input id="firstInput" type="text"/>
       <br />
       <br/>Last Name: <input id="lastInput" type="text"/>
       <br />
       <br />Confirmation: <input id="confirmationInput" type="text"/></br>
       <br/>
-      code: <input type=text class=qrcode-text
-      ><label class=qrcode-text-btn>
-    <input type=file
-        accept="image/*"
-        capture=environment
-        onchange="openQRCamera(this)"
-        tabindex=-1
-    ></label>
+      code: <input type=password size=16 class=qrcode-text><label class=qrcode-text-btn><input type=file accept="image/*" capture=environment onchange="openQRCamera(this);" tabindex=-1></label>
       </div>
       <br/>
       <br/>
@@ -45,6 +38,29 @@
       checkInForm.addEventListener("submit", submitCheckIn)
       console.log(code.value)
     })
+
+    function openQRCamera(node) {
+      console.log(node.value)
+      var reader = new FileReader();
+      reader.onload = function() {
+        node.value = "";
+        qrcode.callback = function(res) {
+          if(res instanceof Error) {
+            alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+          } else {
+            node.parentNode.previousElementSibling.value = res;
+          }
+        };
+        qrcode.decode(reader.result);
+      };
+      reader.readAsDataURL(node.files[0]);
+      debugger
+    }
+
+    function showQRIntro() {
+      debugger
+      return confirm("Use your camera to take a picture of a QR code.");
+    }
 
     function submitCheckIn(e){
       console.log(code.value)
