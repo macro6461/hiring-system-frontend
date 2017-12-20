@@ -18,7 +18,7 @@
       <br/>
       <!-- <input type="file" accept="image/*;capture=camera">
       <input type="file" accept="image/*" capture="user"> -->
-      <input type=text class=qrcode-text
+      <input type=text class=qrcode-text onchange="autoFillFetch()"
 ><label class=qrcode-text-btn>
    <input type=file
          accept="image/*"
@@ -35,6 +35,7 @@
 
     </div>
     <script>
+    autoFillFetch()
     let checkInForm = document.getElementsByClassName("checkInForm")[0]
     let checkIn = document.getElementsByClassName("checkIn")[0]
     let code = document.getElementsByClassName("qrcode-text")[0]
@@ -42,13 +43,13 @@
     document.addEventListener('DOMContentLoaded', function(){
       let firstInput = document.getElementById("firstInput")
       let lastInput = document.getElementById("lastInput")
-      let confirmationNum = document.getElementById("confirmationInput")
+      let confirmationInput =document.getElementById("confirmationInput")
 
       checkInForm.addEventListener("submit", submitCheckIn)
       console.log(code.value)
     })
 
-    function openQRCamera(node) {
+  function openQRCamera(node) {
   var reader = new FileReader();
   reader.onload = function() {
     node.value = "";
@@ -68,21 +69,24 @@
 }
 
   function autoFillFetch(data){
+    let qrCodeInput = document.getElementsByClassName("qrcode-text")[0]
     debugger
-    if (data) {
+    if (qrCodeInput.value.length > 0) {
       fetch("http://localhost:3000/company_lead_rsvp_tickets", {
             headers: {"Content-Type": "application/json",
             "Accept":"application/json"},
             method: "POST",
             body: JSON.stringify({
-              otp_secret_key: data.value,
+              otp_secret_key: qrCodeInput.value,
               first_name: firstInput.value,
               last_name: lastInput.value,
-              confirmation: confirmationNum.value
+              confirmation: confirmationInput.value
             })
           })
           .then(res => res.json())
           .then(json => autoFillForm(json))
+    } else {
+      console.log("no data")
     }
   }
 
@@ -90,10 +94,14 @@
     debugger
     let company_lead = fetch(`http://localhost:3000/company_leads/${data.company_lead_rsvp_ticket.id}`)
     .then(res => res.json())
+    .then(json => fillForm({lead: json, ticket: data}))
+  }
+
+  function fillForm(data){
     debugger
-    firstInput.value = data.company_lead.first_name
-    secondInput.value = data.company_lead.last_name
-    confirmationNum.value = data.company_lead_rsvp_ticket.confirmation
+    firstInput.value = data.lead.first_name
+    lastInput.value = data.lead.last_name
+    confirmationInput.value = data.ticket.company_lead_rsvp_ticket.confirmation
   }
 
     function submitCheckIn(e){
@@ -108,7 +116,7 @@
               otp_secret_key: code.value,
               first_name: firstInput.value,
               last_name: lastInput.value,
-              confirmation: confirmationNum.value,
+              confirmation: confirmationInput.value,
             })
           })
           .then(res => res.json())
