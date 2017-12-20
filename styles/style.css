@@ -224,19 +224,24 @@ h1{
 }
 
 .qrcode-text-btn {
-  display:inline-block;
+  /* display:inline-block; */
+  /* background-color: black; */
   height:1em;
   width:1.7em;
   margin-left:-1.7em;
-  cursor:pointer
+
 }
 
 .qrcode-text-btn > input[type=file] {
   position:absolute;
   overflow:hidden;
+  padding-left: 40px;
+  margin-left: 2%;
   width:1px;
   height:1px;
   opacity:1;
+  background-color: black;
+  cursor:pointer
 }
 
 
