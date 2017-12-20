@@ -77,8 +77,8 @@ function fetchRsvpOtp(data){
 function generateQrCode(data){
   //consider adding more user data in the qr code. When scanned it reads the string it was used to be made.
   debugger
-  
-  var typeNumber = 8;
+
+  var typeNumber = 6;
         var errorCorrectionLevel = 'L';
         var qr = qrCodeGenerator(typeNumber, errorCorrectionLevel);
         qr.addData(data.otp_secret_key);

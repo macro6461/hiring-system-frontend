@@ -224,7 +224,7 @@ h1{
 }
 
 .qrcode-text-btn {
-  display:inline-block; background:url(microQrcodeImage.png) 50% 50% no-repeat;
+  display:inline-block;
   height:1em;
   width:1.7em;
   margin-left:-1.7em;
@@ -233,7 +233,7 @@ h1{
 
 .qrcode-text-btn > input[type=file] {
   position:absolute;
-  /* overflow:hidden; */
+  overflow:hidden;
   width:1px;
   height:1px;
   opacity:1;

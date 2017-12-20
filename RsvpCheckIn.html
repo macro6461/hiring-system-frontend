@@ -16,6 +16,8 @@
       <br />
       <br />Confirmation: <input id="confirmationInput" type="text"/></br>
       <br/>
+      <!-- <input type="file" accept="image/*;capture=camera">
+      <input type="file" accept="image/*" capture="user"> -->
       code: <input type=password size=16 class=qrcode-text><label class=qrcode-text-btn><input type=file accept="image/*" capture=environment onchange="openQRCamera(this);" style="width: 500px, display: block;"></label>
       </div>
       <br/>
@@ -27,7 +29,27 @@
 
     </div>
     <script>
-
+//     navigator.getUserMedia = navigator.getUserMedia ||
+//                          navigator.webkitGetUserMedia ||
+//                          navigator.mozGetUserMedia;
+//
+//     if (navigator.getUserMedia) {
+//      navigator.getUserMedia({ audio: true, video: { width: 1280, height: 720 } },
+//       function(stream) {
+//         debugger
+//          var picture = document.querySelector('video');
+//          picture.srcObject = stream;
+//          picture.onloadedmetadata = function(e) {
+//            picture.play();
+//          };
+//       },
+//       function(err) {
+//          console.log("The following error occurred: " + err.name);
+//       }
+//    );
+// } else {
+//    console.log("getUserMedia not supported");
+// }
     let checkInForm = document.getElementsByClassName("checkInForm")[0]
     let checkIn = document.getElementsByClassName("checkIn")[0]
     let code = document.getElementsByClassName("qrcode-text")[0]
@@ -45,11 +67,15 @@
       console.log(node.value)
       var reader = new FileReader();
       reader.onload = function() {
+        debugger
         node.value = "";
         qrcode.callback = function(res) {
+          debugger
           if(res instanceof Error) {
             alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
           } else {
+            //node value is being recognized
+            debugger
             node.parentNode.previousElementSibling.value = res;
           }
         };
