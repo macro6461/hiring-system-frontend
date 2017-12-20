@@ -117,7 +117,6 @@
   }
 
     function submitCheckIn(e){
-      console.log(code.value)
       e.preventDefault()
       debugger
       fetch("http://localhost:3000/company_lead_rsvp_tickets", {
@@ -136,6 +135,7 @@
     }
 
     function findTicket(data){
+      debugger
       if (!data.company_lead_rsvp_ticket){
         ticketResponse.innerText = "RSVP not found"
         ticketResponse.style.display = "unset"
