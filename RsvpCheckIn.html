@@ -7,7 +7,7 @@
     <title>RSVP checkin Changed</title>
   </head>
   <body>
-    <h1>Check In Form AutoFill Test 3</h1>
+    <h1>Check In Form AutoFill Test 4</h1>
     <form class="checkInForm">
       <h2>Bohemia January Hiring Event</h2>
       <br />First Name: <input id="firstInput" type="text"/>
@@ -62,15 +62,23 @@
     qrcode.decode(reader.result);
   };
   debugger
+  readerFunction(reader.readAsDataURL(node.files[0]))
   reader.readAsDataURL(node.files[0]);
-  if (reader.readAsDataURL(node.files[0]) === undefined){
+  if (readerFunction(reader.readAsDataURL(node.files[0])) === undefined){
+    debugger
     console.log("wait")
-    reader.readAsDataURL(node.files[0])
+    readerFunction(reader.readAsDataURL(node.files[0]))
+    //reader.readAsDataURL(node.files[0])`
   } else {
     autoFillFetch()
   }
   // console.log(key)
 }
+
+  function readerFunction(data){
+    debugger
+    return data
+  }
 
   function autoFillFetch(){
     let qrCodeInput = document.getElementsByClassName("qrcode-text")[0]
