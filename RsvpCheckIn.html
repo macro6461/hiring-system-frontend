@@ -18,7 +18,7 @@
       <br/>
       <!-- <input type="file" accept="image/*;capture=camera">
       <input type="file" accept="image/*" capture="user"> -->
-      <input type=text class=qrcode-text
+      <input type=password class=qrcode-text
 ><label class=qrcode-text-btn>
    <input type=file
          accept="image/*"
@@ -35,27 +35,6 @@
 
     </div>
     <script>
-//     navigator.getUserMedia = navigator.getUserMedia ||
-//                          navigator.webkitGetUserMedia ||
-//                          navigator.mozGetUserMedia;
-//
-//     if (navigator.getUserMedia) {
-//      navigator.getUserMedia({ audio: true, video: { width: 1280, height: 720 } },
-//       function(stream) {
-//         debugger
-//          var picture = document.querySelector('video');
-//          picture.srcObject = stream;
-//          picture.onloadedmetadata = function(e) {
-//            picture.play();
-//          };
-//       },
-//       function(err) {
-//          console.log("The following error occurred: " + err.name);
-//       }
-//    );
-// } else {
-//    console.log("getUserMedia not supported");
-// }
     let checkInForm = document.getElementsByClassName("checkInForm")[0]
     let checkIn = document.getElementsByClassName("checkIn")[0]
     let code = document.getElementsByClassName("qrcode-text")[0]
