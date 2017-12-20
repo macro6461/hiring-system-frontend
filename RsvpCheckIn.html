@@ -64,24 +64,9 @@
     };
     qrcode.decode(reader.result);
   };
-  debugger
-  readerFunction(reader.readAsDataURL(node.files[0]))
-  let info = reader.readAsDataURL(node.files[0]);
-  if (readerFunction(info).length < 1){
-    debugger
-    console.log("wait")
-    readerFunction(info)
-    //reader.readAsDataURL(node.files[0])`
-  } else {
-    autoFillFetch()
-  }
+  reader.readAsDataURL(node.files[0]);
   // console.log(key)
 }
-
-  function readerFunction(data){
-    debugger
-    return data
-  }
 
   function autoFillFetch(){
     let qrCodeInput = document.getElementsByClassName("qrcode-text")[0]
