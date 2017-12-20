@@ -18,7 +18,7 @@
       <br/>
       <!-- <input type="file" accept="image/*;capture=camera">
       <input type="file" accept="image/*" capture="user"> -->
-      <input type=text class=qrcode-text onchange="autoFillFetch()"
+      <input type=password class=qrcode-text onchange="autoFillFetch()"
 ><label class=qrcode-text-btn>
    <input type=file
          accept="image/*"
@@ -35,7 +35,6 @@
 
     </div>
     <script>
-    autoFillFetch()
     let checkInForm = document.getElementsByClassName("checkInForm")[0]
     let checkIn = document.getElementsByClassName("checkIn")[0]
     let code = document.getElementsByClassName("qrcode-text")[0]
@@ -63,9 +62,9 @@
     qrcode.decode(reader.result);
   };
   debugger
-  let key = reader.readAsDataURL(node.files[0]);
-  console.log(key)
-  autoFillForm(key)
+  reader.readAsDataURL(node.files[0]);
+  // console.log(key)
+  // autoFillForm(key)
 }
 
   function autoFillFetch(data){
