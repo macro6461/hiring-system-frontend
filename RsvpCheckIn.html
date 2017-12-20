@@ -61,13 +61,40 @@
     };
     qrcode.decode(reader.result);
   };
-  reader.readAsDataURL(node.files[0]);
+  debugger
+  let key = reader.readAsDataURL(node.files[0]);
+  console.log(key)
+  autoFillForm(key)
 }
 
-    function showQRIntro() {
-      debugger
-      return confirm("Use your camera to take a picture of a QR code.");
+  function autoFillFetch(data){
+    debugger
+    if (data) {
+      fetch("http://localhost:3000/company_lead_rsvp_tickets", {
+            headers: {"Content-Type": "application/json",
+            "Accept":"application/json"},
+            method: "POST",
+            body: JSON.stringify({
+              otp_secret_key: data.value,
+              first_name: firstInput.value,
+              last_name: lastInput.value,
+              confirmation: confirmationNum.value
+            })
+          })
+          .then(res => res.json())
+          .then(json => autoFillForm(json))
     }
+  }
+
+  function autoFillForm(data){
+    debugger
+    let company_lead = fetch(`http://localhost:3000/company_leads/${data.company_lead_rsvp_ticket.id}`)
+    .then(res => res.json())
+    debugger
+    firstInput.value = data.company_lead.first_name
+    secondInput.value = data.company_lead.last_name
+    confirmationNum.value = data.company_lead_rsvp_ticket.confirmation
+  }
 
     function submitCheckIn(e){
       console.log(code.value)
@@ -81,6 +108,7 @@
               otp_secret_key: code.value,
               first_name: firstInput.value,
               last_name: lastInput.value,
+              confirmation: confirmationNum.value,
             })
           })
           .then(res => res.json())
