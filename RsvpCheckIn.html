@@ -70,29 +70,20 @@
     })
 
     function openQRCamera(node) {
-      debugger
-      console.log(node.value)
-      var reader = new FileReader();
-      reader.onload = function() {
-        debugger
-        node.value = "";
-        qrcode.callback = function(res) {
-          debugger
-          if(res instanceof Error) {
-            alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
-          } else {
-            //node value is being recognized
-            debugger
-            node.parentNode.previousElementSibling.value = res;
-          }
-          debugger
-        };
-        debugger
-        qrcode.decode(reader.result);
-      };
-      reader.readAsDataURL(node.files[0]);
-      debugger
-    }
+  var reader = new FileReader();
+  reader.onload = function() {
+    node.value = "";
+    qrcode.callback = function(res) {
+      if(res instanceof Error) {
+        alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+      } else {
+        node.parentNode.previousElementSibling.value = res;
+      }
+    };
+    qrcode.decode(reader.result);
+  };
+  reader.readAsDataURL(node.files[0]);
+}
 
     function showQRIntro() {
       debugger
