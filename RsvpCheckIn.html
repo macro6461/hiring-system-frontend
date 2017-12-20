@@ -18,7 +18,7 @@
       <br/>
       <!-- <input type="file" accept="image/*;capture=camera">
       <input type="file" accept="image/*" capture="user"> -->
-      <input type=password class=qrcode-text onchange="autoFillFetch()"
+      <input type=password class=qrcode-text onkeyup="autoFillFetch()"
 ><label class=qrcode-text-btn>
    <input type=file
          accept="image/*"
@@ -38,6 +38,9 @@
     let checkInForm = document.getElementsByClassName("checkInForm")[0]
     let checkIn = document.getElementsByClassName("checkIn")[0]
     let code = document.getElementsByClassName("qrcode-text")[0]
+    console.log(code)
+    debugger
+
     let ticketResponse = document.getElementsByClassName("ticketResponseDiv")[0]
     document.addEventListener('DOMContentLoaded', function(){
       let firstInput = document.getElementById("firstInput")
@@ -165,6 +168,21 @@
         ticketResponse.style.position = "fixed"
         ticketResponse.style.left = "30%"
         ticketResponse.style.top = "80%"
+        destroyTicket(data)
+      }
+
+      function destroyTicket(data){
+        debugger
+        fetch(`http://localhost:3000/company_lead_rsvps/${data.company_lead_rsvp_ticket.company_lead_rsvp_id}`, {
+              headers: {"Content-Type": "application/json",
+              "Accept":"application/json"},
+              method: "PATCH",
+              body: JSON.stringify({
+                checked_in: true
+              })
+            })
+            .then(res => res.json())
+            .then(json => console.log(json))
       }
     </script>
     </body>
