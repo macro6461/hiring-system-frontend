@@ -64,13 +64,13 @@
   debugger
   reader.readAsDataURL(node.files[0]);
   // console.log(key)
-  // autoFillForm(key)
+  autoFillForm()
 }
 
-  function autoFillFetch(data){
+  function autoFillFetch(){
     let qrCodeInput = document.getElementsByClassName("qrcode-text")[0]
     debugger
-    if (qrCodeInput.value.length > 0) {
+    if (qrCodeInput.value.length > 14) {
       fetch("http://localhost:3000/company_lead_rsvp_tickets", {
             headers: {"Content-Type": "application/json",
             "Accept":"application/json"},
