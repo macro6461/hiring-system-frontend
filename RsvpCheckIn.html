@@ -63,8 +63,12 @@
   };
   debugger
   reader.readAsDataURL(node.files[0]);
+  if (reader.readAsDataURL(node.files[0]) === undefined){
+    console.log("wait")
+  } else {
+    autoFillFetch()
+  }
   // console.log(key)
-  autoFillFetch()
 }
 
   function autoFillFetch(){
