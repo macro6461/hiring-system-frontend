@@ -66,11 +66,11 @@
   };
   debugger
   readerFunction(reader.readAsDataURL(node.files[0]))
-  reader.readAsDataURL(node.files[0]);
-  if (readerFunction(reader.readAsDataURL(node.files[0])).length < 1){
+  let info = reader.readAsDataURL(node.files[0]);
+  if (readerFunction(info).length < 1){
     debugger
     console.log("wait")
-    readerFunction(reader.readAsDataURL(node.files[0]))
+    readerFunction(info)
     //reader.readAsDataURL(node.files[0])`
   } else {
     autoFillFetch()
