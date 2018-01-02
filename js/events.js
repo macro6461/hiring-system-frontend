@@ -67,7 +67,6 @@ function submitCompanyLeadRsvpFormData(e){
 }
 
 function fetchRsvpOtp(data){
-
   debugger
   fetch(`http://localhost:3000/company_lead_rsvp_tickets/${data.company_lead_rsvp.id}}`)
   .then(res => res.json())
@@ -77,13 +76,14 @@ function fetchRsvpOtp(data){
 function generateQrCode(data){
   //consider adding more user data in the qr code. When scanned it reads the string it was used to be made.
   debugger
-
-  var typeNumber = 6;
-        var errorCorrectionLevel = 'L';
-        var qr = qrCodeGenerator(typeNumber, errorCorrectionLevel);
-        qr.addData(data.otp_secret_key);
-        qr.make();
-  showTicket({ticket: data, qrCode:qr} )
+  if (data){
+    var typeNumber = 6;
+          var errorCorrectionLevel = 'L';
+          var qr = qrCodeGenerator(typeNumber, errorCorrectionLevel);
+          qr.addData(data.otp_secret_key);
+          qr.make();
+    showTicket({ticket: data, qrCode:qr} )
+  }
 }
 
 function showTicket(data){
