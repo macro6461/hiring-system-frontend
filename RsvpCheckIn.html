@@ -14,7 +14,7 @@
       <br />
       <br/>Last Name: <input id="lastInput" type="text"/>
       <br />
-      <br />Confirmation: <input id="confirmationInput" type="password"/></br>
+      <br />Confirmation: <input id="confirmationInput" type="text"/></br>
       <br/>
       <!-- <input type="file" accept="image/*;capture=camera">
       <input type="file" accept="image/*" capture="user"> -->
@@ -65,7 +65,7 @@
     qrcode.decode(reader.result);
   };
   reader.readAsDataURL(node.files[0]);
-  // console.log(key)
+
 }
 
   function autoFillFetch(){
@@ -84,24 +84,29 @@
             })
           })
           .then(res => res.json())
-          .then(json => autoFillForm(json))
+          .then(json => fillForm(json))
     } else {
       console.log("no data")
     }
   }
 
-  function autoFillForm(data){
-    debugger
-    let company_lead = fetch(`http://localhost:3000/company_leads/${data.company_lead_rsvp_ticket.id}`)
-    .then(res => res.json())
-    .then(json => fillForm({lead: json, ticket: data}))
-  }
-
   function fillForm(data){
     debugger
-    firstInput.value = data.lead.first_name
-    lastInput.value = data.lead.last_name
-    confirmationInput.value = data.ticket.company_lead_rsvp_ticket.confirmation
+    if (data.error){
+      ticketResponse.innerText = "RSVP not found"
+      ticketResponse.style.color = "red"
+      ticketResponse.style.display = "unset"
+      ticketResponse.style.border = "solid 1px black"
+      ticketResponse.style.position = "fixed"
+      ticketResponse.style.left = "30%"
+      ticketResponse.style.top = "80%"
+    } else if (data.lead){
+      let lead = data.lead[0]
+      debugger
+      firstInput.value = lead.first_name
+      lastInput.value = lead.last_name
+      confirmationInput.value = data.ticket.confirmation
+    }
   }
 
     function submitCheckIn(e){
@@ -124,15 +129,17 @@
 
     function findTicket(data){
       debugger
-      if (!data.company_lead_rsvp_ticket){
+      if (!data.ticket){
+        ticketResponse.style.color = "red"
         ticketResponse.innerText = "RSVP not found"
         ticketResponse.style.display = "unset"
         ticketResponse.style.border = "solid 1px black"
         ticketResponse.style.position = "fixed"
         ticketResponse.style.left = "30%"
         ticketResponse.style.top = "80%"
-      } else if (data.company_lead_rsvp_ticket){
-      fetch(`http://localhost:3000/company_lead_rsvp_tickets/${data.company_lead_rsvp_ticket.id}`, {
+      } else if (data.ticket){
+        debugger
+      fetch(`http://localhost:3000/company_lead_rsvp_tickets/${data.ticket.id}`, {
             headers: {"Content-Type": "application/json",
             "Accept":"application/json"},
             method: "PATCH",
@@ -147,7 +154,9 @@
 
     function renderTicketResponse(data){
       debugger
+
         ticketResponse.innerText = "Checkin Successful!"
+        ticketResponse.style.color = "green"
         ticketResponse.style.display = "unset"
         ticketResponse.style.border = "solid 1px black"
         ticketResponse.style.position = "fixed"
