@@ -21,7 +21,7 @@ body{
   display: none;
   opacity: 1 !important;
   position: fixed;
-  top: 2%;
+  top: 10%;
   left: 23%;
   background-color: #eeeeee;
   z-index: 100;

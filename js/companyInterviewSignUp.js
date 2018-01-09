@@ -24,7 +24,7 @@ function submitCompanyLeadInterviewFormData(e){
   debugger
   console.log(licensed)
   event.preventDefault()
-  if (trainerInput.length > 0){
+  if (trainerInput.length > 2){
     //send post request to trainers, find trainer, get trainer id, then make post request to trainer_lead_interviews, create
     //trainer_lead_interview, send confirmation email
   } else {
