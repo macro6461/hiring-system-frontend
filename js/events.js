@@ -9,7 +9,10 @@ let license;
 let ticket;
 let outer = document.getElementsByClassName("outerModal")[0]
 let rsvp = document.getElementsByClassName("rsvpForm")[0]
+
+
 document.addEventListener('DOMContentLoaded', function(){
+
   debugger
   eventsDiv = document.getElementsByClassName("eventsDiv")[0]
   fetch("http://localhost:3000/events")
@@ -39,6 +42,7 @@ function openEventForm(data){
   workWithUs = document.getElementById("modalButton")
   license = document.querySelector('input[name="licensed"]')
   header = document.getElementsByClassName("eventTitle")[0]
+  let trainerInput = document.getElementById("trainerInput")
   header.innerText = data
   outer.style.display = "unset"
   rsvp.style.display = "unset"
@@ -49,28 +53,75 @@ function openEventForm(data){
 function submitCompanyLeadRsvpFormData(e){
   e.preventDefault()
   debugger
-  fetch("http://localhost:3000/company_lead_rsvps", {
-        headers: {"Content-Type": "application/json",
-        "Accept":"application/json"},
-        method: "POST",
-        body: JSON.stringify({
-          email_address: emailInput.value,
-          first_name: firstInput.value,
-          last_name: lastInput.value,
-          phone_number: phoneInput.value,
-          licensed: license,
-          event_title: header.innerText
+  if (trainerInput.value.split(" ").length > 1){
+    let first = trainerInput.value.split(" ")[0]
+    let second = trainerInput.value.split(" ")[1]
+    fetch("http://localhost:3000/trainers", {
+          headers: {"Content-Type": "application/json",
+          "Accept":"application/json"},
+          method: "POST",
+          body: JSON.stringify({
+            first_name: first.toLowerCase(),
+            last_name: second.toLowerCase()
+          })
         })
+        .then(res => res.json())
+        .then(json => postToTrainerLeadRsvp(json))
+  } else {
+    fetch("http://localhost:3000/company_lead_rsvps", {
+          headers: {"Content-Type": "application/json",
+          "Accept":"application/json"},
+          method: "POST",
+          body: JSON.stringify({
+            email_address: emailInput.value,
+            first_name: firstInput.value,
+            last_name: lastInput.value,
+            phone_number: phoneInput.value,
+            licensed: license.value,
+            event_title: header.innerText
+          })
+        })
+        .then(res => res.json())
+        .then(json => fetchRsvpOtp(json))
+  }
+}
+
+function postToTrainerLeadRsvp(data){
+  let licensed = document.querySelector('input[name="licensed"]:checked')
+  let trainerId = data.trainer.id
+  debugger
+  fetch("http://localhost:3000/trainer_lead_rsvps", {
+      headers: {"Content-Type": "application/json",
+      "Accept":"application/json"},
+      method: "POST",
+      body: JSON.stringify({
+        email_address: emailInput.value,
+        first_name: firstInput.value,
+        last_name: lastInput.value,
+        phone_number: phoneInput.value,
+        licensed: license.value,
+        event_title: header.innerText,
+        trainer_id: trainerId
       })
-      .then(res => res.json())
-      .then(json => fetchRsvpOtp(json))
+    })
+    .then(res => res.json())
+    .then(json => fetchRsvpOtp(json))
+
+    //send confirmation email
 }
 
 function fetchRsvpOtp(data){
   debugger
-  fetch(`http://localhost:3000/company_lead_rsvp_tickets/${data.company_lead_rsvp.id}}`)
-  .then(res => res.json())
-  .then(json => generateQrCode(json))
+  if (data.company_lead_rsvp){
+    fetch(`http://localhost:3000/company_lead_rsvp_tickets/${data.company_lead_rsvp.id}}`)
+    .then(res => res.json())
+    .then(json => generateQrCode(json))
+  } else if (data.trainer_lead_rsvp){
+    fetch(`http://localhost:3000/trainer_lead_rsvp_tickets/${data.trainer_lead_rsvp.id}}`)
+    .then(res => res.json())
+    .then(json => generateQrCode(json))
+  }
+
 }
 
 function generateQrCode(data){
