@@ -17,21 +17,27 @@ document.addEventListener('DOMContentLoaded', function(){
   eventsDiv = document.getElementsByClassName("eventsDiv")[0]
   fetch("http://localhost:3000/events")
     .then(res => res.json())
-    .then(json => renderEvents(json));
+    .then(json => renderEvents(json[0]));
 })
 
 function renderEvents(data){
   console.log(eventsDiv)
-  data.map(event => {
+
     debugger
-    eventListElement = document.createElement('li')
+    eventHeaderElement = document.createElement('h2')
     eventElement = document.createElement('a')
-    console.log(eventListElement.innerText)
-    eventElement.innerText = `${event.title}`
-    eventElement.addEventListener("click", ()=> {openEventForm(event.title)})
-    eventListElement.appendChild(eventElement)
-    eventsDiv.appendChild(eventListElement)
-  })
+
+    eventElement.innerText = `${data.title}`
+    eventsDiv.addEventListener("click", ()=> {openEventForm(data.title)})
+    eventHeaderElement.appendChild(eventElement)
+    eventsDiv.appendChild(eventHeaderElement)
+    eventsDiv.style.width = "50%"
+    eventsDiv.style.padding = "5%"
+    eventsDiv.style.textAlign = "center"
+    eventsDiv.style.display = "block"
+    eventsDiv.style.marginLeft = "20%"
+    eventsDiv.style.border = "solid 1px black"
+
 }
 
 function openEventForm(data){
@@ -141,7 +147,7 @@ function showTicket(data){
   rsvp.style.display = "none"
   debugger
   document.getElementById('ticketTitleHeader').innerHTML = data.ticket.title
-  document.getElementById('ticketDateHeader').innerHTML = "when: " + data.ticket.date
+  document.getElementById('ticketDateHeader').innerHTML = "when: " + data.ticket.start_date + "-" + data.ticket.end_date
   document.getElementById('ticketLocationHeader').innerHTML = "where: " + data.ticket.location
   let qrCodeRendered = document.getElementById('placeHolder').innerHTML = data.qrCode.createImgTag();
   document.getElementById('ticketConfirmationHeader').innerHTML = "confirmation: " + data.ticket.confirmation
