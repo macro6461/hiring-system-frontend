@@ -12,32 +12,86 @@ let rsvp = document.getElementsByClassName("rsvpForm")[0]
 
 
 document.addEventListener('DOMContentLoaded', function(){
-
-  debugger
   eventsDiv = document.getElementsByClassName("eventsDiv")[0]
-  fetch("http://localhost:3000/events")
-    .then(res => res.json())
-    .then(json => renderEvents(json[0]));
+
+      fetchEvent()
+
 })
 
-function renderEvents(data){
-  console.log(eventsDiv)
+function fetchEvent(){
+  fetch("http://localhost:3000/events")
+    .then(res => res.json())
+    .then(json => renderEvent(json[0]))
+    .then(setTimeout(function(){
+      fetchEventAgain()
+    }, 1000))
+}
 
+function fetchEventAgain(){
+  fetchEvent()
+}
+
+
+function renderEvent(data){
+  if (eventsDiv.innerText.length === 0){
     debugger
+  console.log(eventsDiv)
     eventHeaderElement = document.createElement('h2')
     eventElement = document.createElement('a')
-
+    eventTimeHeaderElement = document.createElement('h4')
+    eventTimeHeaderElement.innerText = `${time(data.start_date)} to ${time(data.end_date)}`
     eventElement.innerText = `${data.title}`
     eventsDiv.addEventListener("click", ()=> {openEventForm(data.title)})
     eventHeaderElement.appendChild(eventElement)
     eventsDiv.appendChild(eventHeaderElement)
+    eventsDiv.appendChild(eventTimeHeaderElement)
     eventsDiv.style.width = "50%"
     eventsDiv.style.padding = "5%"
     eventsDiv.style.textAlign = "center"
     eventsDiv.style.display = "block"
     eventsDiv.style.marginLeft = "20%"
     eventsDiv.style.border = "solid 1px black"
+  } else {
+    reRenderEvent(data)
+  }
+}
 
+function date(data){
+  var monthAndDay = data.end_date.split("T")[0].split("-").splice(1)
+  var year = data.end_date.split("T")[0].split("-")[0]
+  var newDate = monthAndDay.push(year).join("/")
+}
+
+function time(data){
+  debugger
+  var twentyFourTime = data.split("T")[1].split(":00")[0]
+  var hour = data.split("T")[1].split(":00")[0].split(":")[0]
+  var min;
+  if (data.split("T")[1].split(":00")[0].split(":")[1] === undefined){
+    min = "00"
+  } else {
+    min = data.split("T")[1].split(":00")[0].split(":")[1]
+  }
+  debugger
+  var newHr;
+  var amOrPm;
+  if (parseInt(hour) > 12){
+    newHr = (hour - 12)
+    newHr.toString()
+    amOrPm = "pm"
+  } else {
+    newHr = hour.toString()
+    amOrPm = "am"
+  }
+  var newTime = newHr + ":" + min + amOrPm
+  console.log(newTime)
+  return newTime
+}
+
+function reRenderEvent(data){
+  eventsDiv.addEventListener("click", ()=> {openEventForm(data.title)})
+  eventHeaderElement.innerText = `${data.title}`
+  debugger
 }
 
 function openEventForm(data){
@@ -147,7 +201,7 @@ function showTicket(data){
   rsvp.style.display = "none"
   debugger
   document.getElementById('ticketTitleHeader').innerHTML = data.ticket.title
-  document.getElementById('ticketDateHeader').innerHTML = "when: " + data.ticket.start_date + "-" + data.ticket.end_date
+  document.getElementById('ticketDateHeader').innerHTML = "when: " + `${time(data.ticket.start_date)}` + "-" + `${time(data.ticket.end_date)}`
   document.getElementById('ticketLocationHeader').innerHTML = "where: " + data.ticket.location
   let qrCodeRendered = document.getElementById('placeHolder').innerHTML = data.qrCode.createImgTag();
   document.getElementById('ticketConfirmationHeader').innerHTML = "confirmation: " + data.ticket.confirmation
