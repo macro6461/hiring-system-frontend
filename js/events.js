@@ -24,7 +24,7 @@ function fetchEvent(){
     .then(json => renderEvent(json[0]))
     .then(setTimeout(function(){
       fetchEventAgain()
-    }, 1000))
+    }, 10000))
 }
 
 function fetchEventAgain(){
@@ -36,6 +36,7 @@ function renderEvent(data){
   if (eventsDiv.innerText.length === 0){
     debugger
   console.log(eventsDiv)
+    attendance = document.createElement("h4")
     eventHeaderElement = document.createElement('h2')
     eventElement = document.createElement('a')
     eventTimeHeaderElement = document.createElement('h4')
@@ -45,6 +46,8 @@ function renderEvent(data){
     eventHeaderElement.appendChild(eventElement)
     eventsDiv.appendChild(eventHeaderElement)
     eventsDiv.appendChild(eventTimeHeaderElement)
+    eventsDiv.appendChild(attendance)
+    attendance.innerText = data.company_lead_rsvps.length + data.trainer_lead_rsvps.length + " people going"
     eventsDiv.style.width = "50%"
     eventsDiv.style.padding = "5%"
     eventsDiv.style.textAlign = "center"
@@ -57,9 +60,12 @@ function renderEvent(data){
 }
 
 function date(data){
-  var monthAndDay = data.end_date.split("T")[0].split("-").splice(1)
-  var year = data.end_date.split("T")[0].split("-")[0]
-  var newDate = monthAndDay.push(year).join("/")
+  debugger
+  var monthAndDay = data.split("T")[0].split("-").splice(1)
+  var year = data.split("T")[0].split("-")[0]
+  monthAndDay.push(year)
+  console.log(monthAndDay.join("/"))
+  return monthAndDay.join("/")
 }
 
 function time(data){
@@ -91,6 +97,7 @@ function time(data){
 function reRenderEvent(data){
   eventsDiv.addEventListener("click", ()=> {openEventForm(data.title)})
   eventHeaderElement.innerText = `${data.title}`
+  attendance.innerText = data.company_lead_rsvps.length + data.trainer_lead_rsvps.length + " people going"
   debugger
 }
 
@@ -201,7 +208,7 @@ function showTicket(data){
   rsvp.style.display = "none"
   debugger
   document.getElementById('ticketTitleHeader').innerHTML = data.ticket.title
-  document.getElementById('ticketDateHeader').innerHTML = "when: " + `${time(data.ticket.start_date)}` + "-" + `${time(data.ticket.end_date)}`
+  document.getElementById('ticketDateHeader').innerHTML = "when: " + `${date(data.ticket.start_date)} from ${time(data.ticket.start_date)}` + " to " + `${time(data.ticket.end_date)}`
   document.getElementById('ticketLocationHeader').innerHTML = "where: " + data.ticket.location
   let qrCodeRendered = document.getElementById('placeHolder').innerHTML = data.qrCode.createImgTag();
   document.getElementById('ticketConfirmationHeader').innerHTML = "confirmation: " + data.ticket.confirmation
@@ -211,6 +218,7 @@ function showTicket(data){
 }
 
 function closeRsvpFormModal(){
+  document.getElementById('ticket').style.display = "none"
   outer.style.display="none"
   rsvp.style.display="none"
   ticket.style.display="none"
