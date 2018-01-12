@@ -22,9 +22,9 @@ function fetchEvent(){
   fetch("http://localhost:3000/events")
     .then(res => res.json())
     .then(json => renderEvent(json[0]))
-    .then(setTimeout(function(){
-      fetchEventAgain()
-    }, 10000))
+    // .then(setTimeout(function(){
+    //   fetchEventAgain()
+    // }, 10000))
 }
 
 function fetchEventAgain(){
