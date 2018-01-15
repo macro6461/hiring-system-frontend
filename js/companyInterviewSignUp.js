@@ -22,7 +22,7 @@ function submitCompanyLeadInterviewFormData(e){
   e.preventDefault()
   let licensed = document.querySelector('input[name="licensed"]:checked')
   debugger
-  if (trainerInput.value.split(" ").length > 1){
+  if (trainerInput.value !== "No Reference"){
     let first = trainerInput.value.split(" ")[0]
     let second = trainerInput.value.split(" ")[1]
     fetch("http://localhost:3000/trainers", {
@@ -77,14 +77,14 @@ function createCompanyLeadInterviewWithReference(data){
 
 function postToCompanyLeadInterviewReference(data){
   debugger
-  let licensed = document.querySelector('input[name="licensed"]:checked')
-  debugger
+  console.log(data.companyLeadInterview.company_lead_interview.id)
+  console.log(data.trainerId)
   fetch("http://localhost:3000/interview_references", {
       headers: {"Content-Type": "application/json",
       "Accept":"application/json"},
       method: "POST",
       body: JSON.stringify({
-        company_lead_interview_id: data.companyLeadInterview.id,
+        company_lead_interview_id: data.companyLeadInterview.company_lead_interview.id,
         trainer_id: data.trainerId
       })
     })
