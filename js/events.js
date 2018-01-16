@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function(){
 function fetchEvent(){
   fetch("http://localhost:3000/events")
     .then(res => res.json())
-    .then(json => renderEvent(json[0]))
+    .then(json => renderEvent(json))
     // .then(setTimeout(function(){
     //   fetchEventAgain()
     // }, 10000))
@@ -33,6 +33,14 @@ function fetchEventAgain(){
 
 
 function renderEvent(data){
+  
+  debugger
+  theEvent = data.find(function(anEvent){
+    debugger
+    return anEvent.access === "open"
+  })
+
+  debugger
   if (eventsDiv.innerText.length === 0){
     debugger
   console.log(eventsDiv)
@@ -40,14 +48,14 @@ function renderEvent(data){
     eventHeaderElement = document.createElement('h2')
     eventElement = document.createElement('a')
     eventTimeHeaderElement = document.createElement('h4')
-    eventTimeHeaderElement.innerText = `${time(data.start_date)} to ${time(data.end_date)}`
-    eventElement.innerText = `${data.title}`
-    eventsDiv.addEventListener("click", ()=> {openEventForm(data.title)})
+    eventTimeHeaderElement.innerText = `${time(theEvent.start_date)} to ${time(theEvent.end_date)}`
+    eventElement.innerText = `${theEvent.title}`
+    eventsDiv.addEventListener("click", ()=> {openEventForm(theEvent.title)})
     eventHeaderElement.appendChild(eventElement)
     eventsDiv.appendChild(eventHeaderElement)
     eventsDiv.appendChild(eventTimeHeaderElement)
     eventsDiv.appendChild(attendance)
-    attendance.innerText = data.company_lead_rsvps.length + data.trainer_lead_rsvps.length + " people going"
+    attendance.innerText = theEvent.company_lead_rsvps.length + theEvent.trainer_lead_rsvps.length + " people going"
     eventsDiv.style.width = "50%"
     eventsDiv.style.padding = "5%"
     eventsDiv.style.textAlign = "center"

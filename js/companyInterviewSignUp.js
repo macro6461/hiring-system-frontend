@@ -22,7 +22,8 @@ function submitCompanyLeadInterviewFormData(e){
   e.preventDefault()
   let licensed = document.querySelector('input[name="licensed"]:checked')
   debugger
-  if (trainerInput.value !== "No Reference"){
+  console.log(trainerInput.value)
+  if (trainerInput.value !== "no reference"){
     let first = trainerInput.value.split(" ")[0]
     let second = trainerInput.value.split(" ")[1]
     fetch("http://localhost:3000/trainers", {
